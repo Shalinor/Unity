@@ -14,8 +14,14 @@ public class Unit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		// Move towards our destination
+
+		// NOTE! This just moves directly there, but really you'd want to feed
+		// this into a pathfinding system to get a list of sub-moves or something
+		// to walk a reasonable route.
+		// To see how to do this, look up my TILEMAP tutorial. It does A* pathfinding
+		// and throughout the video I explain how you can apply that pathfinding to hexes.
+
 		// These are both incorrectly named...
 		Vector3 dir = destination - transform.position;
 		Vector3 velocity = dir.normalized * speed * Time.deltaTime;
@@ -25,5 +31,11 @@ public class Unit : MonoBehaviour {
 
 		transform.Translate(velocity);
 
+	}
+
+	void NextTurn()	// Pathfinding would use this
+	{
+		// Set "destination" to be the position of the next tile
+		// in our pathfinding queue.
 	}
 }
