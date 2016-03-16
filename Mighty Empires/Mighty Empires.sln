@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{BA1E1E1A-55E3-3AA1-8B07-83B752F63DE4}") = "Mighty Empires", "Assembly-CSharp.csproj", "{97A4B3B6-B4BB-1DFF-5892-6E55B6AA182C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97A4B3B6-B4BB-1DFF-5892-6E55B6AA182C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97A4B3B6-B4BB-1DFF-5892-6E55B6AA182C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97A4B3B6-B4BB-1DFF-5892-6E55B6AA182C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97A4B3B6-B4BB-1DFF-5892-6E55B6AA182C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
