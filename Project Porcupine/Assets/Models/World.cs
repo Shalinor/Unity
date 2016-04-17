@@ -61,5 +61,4 @@ public class World {
 
 		return tiles[x,y];
 	}
-
 }

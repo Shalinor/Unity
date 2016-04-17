@@ -44,6 +44,9 @@ public class WorldController : MonoBehaviour {
 		}
 
 		World.RandomizeTiles();
+
+		// Center camera in the world
+		Camera.main.transform.position = new Vector3( World.Width / 2, World.Height / 2, -10 );
 	}
 
 //	float randomiseTileTimer = 2f;
@@ -70,5 +73,14 @@ public class WorldController : MonoBehaviour {
 		else{
 			Debug.LogError("WorldController.cs_OnTileTypeChanged - Unrecognised tile type");
 		}
+	}
+
+	public Tile GetTileAtWorldCoord( Vector3 coord )
+	{
+		//		coord += new Vector3( 0.5f, 0.5f, 0 ); // Offsetting for center pivots vs bottom-left
+		int x = Mathf.FloorToInt(coord.x);
+		int y = Mathf.FloorToInt(coord.y);
+
+		return World.GetTileAt(x, y);
 	}
 }

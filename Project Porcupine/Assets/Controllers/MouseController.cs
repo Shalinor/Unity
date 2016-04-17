@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class MouseController : MonoBehaviour {
 
-	public GameObject circleCursor;
+	public GameObject circleCursorPrefab;
 
 	// The world-position of the mouse this frame
 	Vector3 currFramePosition;
@@ -14,15 +14,21 @@ public class MouseController : MonoBehaviour {
 	// The world-position of our left-mouse drag operation
 	Vector3 dragStartPosition;
 
+	// List of instantiated drag previews
+	List<GameObject> dragPreviewGameObjects;
+
 	// Min/Max zooms for camera
 	public int maxCameraZoomOut = 25;
 	public int minCameraZoomIn = 5;
 
+	// Speed multiplier for the zoom
+	public int zoomSpeed = 10;
+
 
 	// Use this for initialization
 	void Start () {
-		// Set zoom level to default (10)
-		Camera.main.orthographicSize = 10;
+		//Instantiate the drag preview list
+		dragPreviewGameObjects = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -32,7 +38,7 @@ public class MouseController : MonoBehaviour {
 		currFramePosition = CenterPointOffset( currFramePosition );
 
 
-		UpdateCursor();
+//		UpdateCursor();
 		UpdateDragging();		// Left mouse button
 		UpdateCameraMovement();	// Right/Center mouse button click and drag map, scroll for zoom
 
@@ -44,10 +50,10 @@ public class MouseController : MonoBehaviour {
 		lastFramePosition = CenterPointOffset( lastFramePosition );
 	}
 
-	void UpdateCursor()
+/*	void UpdateCursor()
 	{
 		// Update the circle cursor position
-		Tile tileUnderMouse = GetTileAtWorldCoord( currFramePosition );
+		Tile tileUnderMouse = WorldController.Instance.GetTileAtWorldCoord( currFramePosition );
 		if( tileUnderMouse != null )
 		{
 			circleCursor.SetActive( true );
@@ -58,41 +64,68 @@ public class MouseController : MonoBehaviour {
 		{
 			circleCursor.SetActive( false );
 		}
-	}
+	}*/
 
 	void UpdateDragging()
 	{
 		// Start drag
-		if( Input.GetMouseButtonDown(0) ) // If left mouse button was pressed in the last frame
+		if( Input.GetMouseButtonDown(0) )	// If left mouse button was pressed in the last frame
 		{
 			dragStartPosition = currFramePosition;
 		}
 
-		// End drag
-		if( Input.GetMouseButtonUp(0) )	// If left mouse button was released in the last frame
+		int start_x = Mathf.FloorToInt( dragStartPosition.x );
+		int end_x = Mathf.FloorToInt( currFramePosition.x );
+		int start_y = Mathf.FloorToInt( dragStartPosition.y );
+		int end_y = Mathf.FloorToInt( currFramePosition.y );
+
+		// Invert start_x & end_x in case dragging right to left to ensure that end_x is always >= start_x
+		if( end_x < start_x )
 		{
-			int start_x = Mathf.FloorToInt( dragStartPosition.x );
-			int end_x = Mathf.FloorToInt( currFramePosition.x );
+			int temp = end_x;
+			end_x = start_x;
+			start_x = temp;
+		}
 
-			// Invert start_x & end_x in case dragging right to left to ensure that end_x is always >= start_x
-			if( end_x < start_x )
-			{
-				int temp = end_x;
-				end_x = start_x;
-				start_x = temp;
+		// Invert start_y & end_y in case dragging right to left to ensure that end_y is always >= start_y
+		if( end_y < start_y )
+		{
+			int temp = end_y;
+			end_y = start_y;
+			start_y = temp;
+		}
+
+		// Clean up old drag previews
+		while( dragPreviewGameObjects.Count > 0 )
+		{
+			GameObject go = dragPreviewGameObjects[0];
+			dragPreviewGameObjects.RemoveAt(0);
+			SimplePool.Despawn(go);
+		}
+
+		if( Input.GetMouseButton(0) )		// If left mouse button is currently pressed
+		{
+			// Display a preview of the drag area
+			// Loop through all the selected tiles
+			for (int x = start_x; x <= end_x; x++) {
+				for (int y = start_y; y <= end_y; y++) {
+					Tile t = WorldController.Instance.World.GetTileAt( x, y );
+					if( t != null )
+					{
+						// Display the building hint on top of this tile position
+						GameObject go = SimplePool.Spawn( circleCursorPrefab, new Vector3( x, y, 0 ), Quaternion.identity );
+						go.transform.SetParent(this.transform, true);
+						dragPreviewGameObjects.Add( go );
+					}
+				}
 			}
 
-			int start_y = Mathf.FloorToInt( dragStartPosition.y );
-			int end_y = Mathf.FloorToInt( currFramePosition.y );
+		}
 
-			// Invert start_y & end_y in case dragging right to left to ensure that end_y is always >= start_y
-			if( end_y < start_y )
-			{
-				int temp = end_y;
-				end_y = start_y;
-				start_y = temp;
-			}
-
+		// End drag
+		if( Input.GetMouseButtonUp(0) )		// If left mouse button was released in the last frame
+		{
+			// Loop through all the selected tiles
 			for (int x = start_x; x <= end_x; x++) {
 				for (int y = start_y; y <= end_y; y++) {
 					Tile t = WorldController.Instance.World.GetTileAt( x, y );
@@ -118,17 +151,12 @@ public class MouseController : MonoBehaviour {
 		// Zoom camera in & out - scroll wheel
 		if( Input.GetAxis( "Mouse ScrollWheel" ) != 0 )
 		{
-			Camera.main.orthographicSize = Mathf.Clamp( ( Camera.main.orthographicSize - Input.GetAxis( "Mouse ScrollWheel" ) ), minCameraZoomIn, maxCameraZoomOut );
+			// Quill18's code:
+			//Camera.main.orthographicSize -= Camera.main.orthographicSize * Input.GetAxis("Mouse ScrollWheel");
+			//Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 3f, 25f);
+
+			Camera.main.orthographicSize = Mathf.Clamp( ( Camera.main.orthographicSize - ( Input.GetAxis( "Mouse ScrollWheel" ) * zoomSpeed ) ), minCameraZoomIn, maxCameraZoomOut );
 		}
-	}
-
-	Tile GetTileAtWorldCoord( Vector3 coord )
-	{
-		//		coord += new Vector3( 0.5f, 0.5f, 0 ); // Offsetting for center pivots vs bottom-left
-		int x = Mathf.FloorToInt(coord.x);
-		int y = Mathf.FloorToInt(coord.y);
-
-		return WorldController.Instance.World.GetTileAt(x, y);
 	}
 
 	Vector3 CenterPointOffset( Vector3 vector )

@@ -51,6 +51,8 @@
      <Compile Include="Assets\Models\LooseObject.cs" />
      <Compile Include="Assets\Models\Tile.cs" />
      <Compile Include="Assets\Models\World.cs" />
+     <Compile Include="Assets\Utilities\SimplePool.cs" />
+     <None Include="Assets\UI\Kenney Assets\license.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
