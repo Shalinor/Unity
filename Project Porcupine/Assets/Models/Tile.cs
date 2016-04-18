@@ -2,11 +2,10 @@
 using System.Collections;
 using System;
 
+public enum TileType { EMPTY, FLOOR }; //Rimworld example -> Marsh, Shallow_Water, Dirt, Rough_Stone, etc, etc};
+
 public class Tile {
-
-	public enum TileType { Empty, Floor }; //Rimworld example -> Marsh, Shallow_Water, Dirt, Rough_Stone, etc, etc};
-
-	private TileType _type = TileType.Empty;
+	private TileType _type = TileType.EMPTY;
 	public TileType Type {
 		get { return _type; }
 		set {
@@ -23,14 +22,19 @@ public class Tile {
 		}
 	}
 
-	//Currently presuming each tile may only have 1 each of loose & installed object
+	// Currently presuming each tile may only have 1 each of loose & installed object
+	// LooseObject is something like a drill or a stack of metal sitting on the floor
 	LooseObject looseObject;
+
+	// InstalledObject is something like a wall, door or sofa.
 	InstalledObject installedObject;
 
+	// The context in which we exist - in case we need to know it...
 	World world;
 	public int X { get; protected set; }
 	public int Y { get; protected set; }
 
+	// The function we callback any time our type changes
 	Action<Tile> cbTileTypeChanged;
 
 	public Tile( World world, int x, int y ) {
@@ -50,7 +54,7 @@ public class Tile {
 			Debug.Log("post - cbTileTypeChanged == null");
 	}
 
-/*	public void UnRegisterTileTypeChangedCallback(Action<Tile> callback) {
+	public void UnRegisterTileTypeChangedCallback(Action<Tile> callback) {
 		cbTileTypeChanged -= callback;
-	}*/
+	}
 }

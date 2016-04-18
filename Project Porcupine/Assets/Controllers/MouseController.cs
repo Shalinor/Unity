@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class MouseController : MonoBehaviour {
 
 	public GameObject circleCursorPrefab;
+
+	bool buildModeIsObjects = false;
+	TileType buildModeTile = TileType.FLOOR;
 
 	// The world-position of the mouse this frame
 	Vector3 currFramePosition;
@@ -68,6 +72,13 @@ public class MouseController : MonoBehaviour {
 
 	void UpdateDragging()
 	{
+		// If we are over a UI element, bailout from this - This could use some tidying up later... Episode 7, 50:00ish
+		if( EventSystem.current.IsPointerOverGameObject() )
+		{
+			return;
+		}
+
+
 		// Start drag
 		if( Input.GetMouseButtonDown(0) )	// If left mouse button was pressed in the last frame
 		{
@@ -129,9 +140,20 @@ public class MouseController : MonoBehaviour {
 			for (int x = start_x; x <= end_x; x++) {
 				for (int y = start_y; y <= end_y; y++) {
 					Tile t = WorldController.Instance.World.GetTileAt( x, y );
+
 					if( t != null )
 					{
-						t.Type = Tile.TileType.Floor;
+						if( buildModeIsObjects == true )
+						{
+							// Create the InstalledObject and assign it to the tile
+
+							// FIXME: Right now, we're just going to assume walls.
+						}
+						else
+						{
+							// We are in tile-changing mode
+							t.Type = buildModeTile;	
+						}
 					}
 				}
 			}
@@ -162,5 +184,23 @@ public class MouseController : MonoBehaviour {
 	Vector3 CenterPointOffset( Vector3 vector )
 	{
 		return vector += new Vector3( 0.5f, 0.5f, 0 );
+	}
+
+	public void SetMode_BuildFloor()
+	{
+		buildModeIsObjects = false;
+		buildModeTile = TileType.FLOOR;
+	}
+
+	public void SetMode_Bulldoze()
+	{
+		buildModeIsObjects = false;
+		buildModeTile = TileType.EMPTY;
+	}
+
+	public void SetMode_BuildWall()
+	{
+		// Wall is not a Tile! Wall is an "InstalledObject" that exists on TOP of a tile.
+		buildModeIsObjects = true;
 	}
 }
