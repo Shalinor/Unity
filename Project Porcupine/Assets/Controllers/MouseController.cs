@@ -6,8 +6,9 @@ public class MouseController : MonoBehaviour {
 
 	public GameObject circleCursorPrefab;
 
-	bool buildModeIsObjects = false;
+	bool	 buildModeIsObjects = false;
 	TileType buildModeTile = TileType.FLOOR;
+	string	 buildModeObjectType;
 
 	// The world-position of the mouse this frame
 	Vector3 currFramePosition;
@@ -146,8 +147,7 @@ public class MouseController : MonoBehaviour {
 						if( buildModeIsObjects == true )
 						{
 							// Create the InstalledObject and assign it to the tile
-
-							// FIXME: Right now, we're just going to assume walls.
+							//WorldController.Instance.World.PlaceInstalledObject( buildModeObjectType, t );
 						}
 						else
 						{
@@ -198,9 +198,10 @@ public class MouseController : MonoBehaviour {
 		buildModeTile = TileType.EMPTY;
 	}
 
-	public void SetMode_BuildWall()
+	public void SetMode_BuildInstalledObject( string objectType )
 	{
 		// Wall is not a Tile! Wall is an "InstalledObject" that exists on TOP of a tile.
 		buildModeIsObjects = true;
+		buildModeObjectType = objectType;
 	}
 }
