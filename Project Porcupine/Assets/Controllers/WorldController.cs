@@ -208,10 +208,18 @@ public class WorldController : MonoBehaviour {
 
 		Tile t;
 
+		// FIXME: Diagonal joins only, and external joins to the "Block" pieces don't work -- There is no graphic for them...
+
 		t = World.GetTileAt(x, y + 1);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 		{
 			spriteName += "N";
+		}
+
+		t = World.GetTileAt(x + 1, y + 1);
+		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
+		{
+			spriteName += "NE";
 		}
 
 		t = World.GetTileAt(x + 1, y);
@@ -220,16 +228,34 @@ public class WorldController : MonoBehaviour {
 			spriteName += "E";
 		}
 
+		t = World.GetTileAt(x + 1, y - 1);
+		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
+		{
+			spriteName += "SE";
+		}
+
 		t = World.GetTileAt(x, y - 1);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 		{
 			spriteName += "S";
 		}
 
+		t = World.GetTileAt(x - 1, y - 1);
+		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
+		{
+			spriteName += "SW";
+		}
+
 		t = World.GetTileAt(x - 1, y);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 		{
 			spriteName += "W";
+		}
+
+		t = World.GetTileAt(x - 1, y + 1);
+		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
+		{
+			spriteName += "NW";
 		}
 
 		// For example, if this object has all four neighbours of

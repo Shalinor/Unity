@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2ea5616137df8e94cb8121c3c00e509a
-timeCreated: 1460981842
+timeCreated: 1461072013
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -21,15 +21,15 @@ TextureImporter:
     21300028: Wall_NEW
     21300030: Wall_NSW
     21300032: Wall_ESW
-    21300034: Wall_BTL
-    21300036: Wall_BTC
-    21300038: Wall_BTR
-    21300040: Wall_BCL
-    21300042: Wall_BC
-    21300044: Wall_BCR
-    21300046: Wall_BBL
-    21300048: Wall_BBC
-    21300050: Wall_BBR
+    21300034: Wall_ESES
+    21300036: Wall_ESESSWW
+    21300038: Wall_SSWW
+    21300040: Wall_NNEESES
+    21300042: Wall_NNEESESSWWNW
+    21300044: Wall_NSSWWNW
+    21300046: Wall_NNEE
+    21300048: Wall_NNEEWNW
+    21300050: Wall_NWNW
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -316,7 +316,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BTL
+    - name: Wall_ESES
       rect:
         serializedVersion: 2
         x: 320
@@ -331,7 +331,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BTC
+    - name: Wall_ESESSWW
       rect:
         serializedVersion: 2
         x: 352
@@ -346,7 +346,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BTR
+    - name: Wall_SSWW
       rect:
         serializedVersion: 2
         x: 384
@@ -361,7 +361,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BCL
+    - name: Wall_NNEESES
       rect:
         serializedVersion: 2
         x: 320
@@ -376,7 +376,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BC
+    - name: Wall_NNEESESSWWNW
       rect:
         serializedVersion: 2
         x: 352
@@ -391,7 +391,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BCR
+    - name: Wall_NSSWWNW
       rect:
         serializedVersion: 2
         x: 384
@@ -406,7 +406,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BBL
+    - name: Wall_NNEE
       rect:
         serializedVersion: 2
         x: 320
@@ -421,7 +421,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BBC
+    - name: Wall_NNEEWNW
       rect:
         serializedVersion: 2
         x: 352
@@ -436,7 +436,7 @@ TextureImporter:
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
-    - name: Wall_BBR
+    - name: Wall_NWNW
       rect:
         serializedVersion: 2
         x: 384
