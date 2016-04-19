@@ -7,7 +7,7 @@ public class World {
 	// A two-dimensional array to hold our tile data
 	Tile[,] tiles;
 
-	Dictionary<string, InstalledObject> installedObjectPrototypes;
+	Dictionary<string, Furniture> furniturePrototypes;
 
 	// The tile width of the world.
 	public int Width { get; protected set; }
@@ -15,7 +15,7 @@ public class World {
 	// The tile height of the world.
 	public int Height { get; protected set; }
 
-	Action<InstalledObject> cbInstalledObjectCreated;
+	Action<Furniture> cbFurnitureCreated;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="World"/> class.
@@ -37,21 +37,24 @@ public class World {
 
 		Debug.Log("World created with "+width*height+" tiles.");
 
-		CreateInstalledObjectPrototypes();
+		CreateFurniturePrototypes();
 	}
 
 	/// <summary>
 	/// Creates the installed object prototypes.
 	/// </summary>
-	void CreateInstalledObjectPrototypes()
+	void CreateFurniturePrototypes()
 	{
-		installedObjectPrototypes = new Dictionary<string, InstalledObject>();
+		furniturePrototypes = new Dictionary<string, Furniture>();
 
-		InstalledObject wallPrototype = InstalledObject.CreatePrototype( 
+		Furniture wallPrototype = Furniture.CreatePrototype( 
 			"Wall_",
-			0);	// Impassable, leaving both width & height as the default 1
+			0,		// Impassable
+			1,		// Width
+			1,		// Height
+			true );	// Links to neighbours and "sort of" becomes part of a large object
 
-		installedObjectPrototypes.Add("Wall_", wallPrototype);
+		furniturePrototypes.Add("Wall_", wallPrototype);
 	}
 
 	/// <summary>
@@ -92,19 +95,19 @@ public class World {
 	}
 
 
-	public void PlaceInstalledObject( string objectType, Tile t )
+	public void PlaceFurniture( string objectType, Tile t )
 	{
-//		Debug.Log("PlaceInstalledObject");
+//		Debug.Log("PlaceFurniture");
 		// TODO: This function assumes 1x1 tiles -- change this later!
 		// TODO: This function assumes no rotation
 
-		if( installedObjectPrototypes.ContainsKey( objectType ) == false )
+		if( furniturePrototypes.ContainsKey( objectType ) == false )
 		{
-			Debug.LogError("installedObjectPrototypes doesn't contain a proto for key: " + objectType);
+			Debug.LogError("furniturePrototypes doesn't contain a proto for key: " + objectType);
 			return;
 		}
 
-		InstalledObject obj = InstalledObject.PlaceInstance( installedObjectPrototypes[objectType], t );
+		Furniture obj = Furniture.PlaceInstance( furniturePrototypes[objectType], t );
 
 		if( obj == null )
 		{
@@ -112,19 +115,19 @@ public class World {
 			return;
 		}
 
-		if( cbInstalledObjectCreated != null )
+		if( cbFurnitureCreated != null )
 		{
-			cbInstalledObjectCreated( obj );
+			cbFurnitureCreated( obj );
 		}
 	}
 
-	public void RegisterInstalledObjectCreated( Action<InstalledObject> callbackfunc )
+	public void RegisterFurnitureCreated( Action<Furniture> callbackfunc )
 	{
-		cbInstalledObjectCreated += callbackfunc;
+		cbFurnitureCreated += callbackfunc;
 	}
 
-	public void UnregisterInstalledObjectCreated( Action<InstalledObject> callbackfunc )
+	public void UnregisterFurnitureCreated( Action<Furniture> callbackfunc )
 	{
-		cbInstalledObjectCreated -= callbackfunc;
+		cbFurnitureCreated -= callbackfunc;
 	}
 }

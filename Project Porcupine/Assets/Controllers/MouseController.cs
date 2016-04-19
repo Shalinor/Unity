@@ -146,8 +146,8 @@ public class MouseController : MonoBehaviour {
 					{
 						if( buildModeIsObjects == true )
 						{
-							// Create the InstalledObject and assign it to the tile
-							WorldController.Instance.World.PlaceInstalledObject( buildModeObjectType, t );
+							// Create the Furniture and assign it to the tile
+							WorldController.Instance.World.PlaceFurniture( buildModeObjectType, t );
 						}
 						else
 						{
@@ -198,9 +198,9 @@ public class MouseController : MonoBehaviour {
 		buildModeTile = TileType.EMPTY;
 	}
 
-	public void SetMode_BuildInstalledObject( string objectType )
+	public void SetMode_BuildFurniture( string objectType )
 	{
-		// Wall is not a Tile! Wall is an "InstalledObject" that exists on TOP of a tile.
+		// Wall is not a Tile! Wall is an "Furniture" that exists on TOP of a tile.
 		buildModeIsObjects = true;
 		buildModeObjectType = objectType;
 	}

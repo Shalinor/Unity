@@ -23,14 +23,14 @@ public class Tile {
 	}
 
 	// Currently presuming each tile may only have 1 each of loose & installed object
-	// LooseObject is something like a drill or a stack of metal sitting on the floor
-	LooseObject looseObject;
+	// Inventory is something like a drill or a stack of metal sitting on the floor
+	Inventory inventory;
 
-	// InstalledObject is something like a wall, door or sofa.
-	InstalledObject installedObject;
+	// Furniture is something like a wall, door or sofa.
+	public Furniture furniture { get; protected set; }
 
 	// The context in which we exist - in case we need to know it...
-	World world;
+	public World world { get; protected set; }
 	public int X { get; protected set; }
 	public int Y { get; protected set; }
 
@@ -58,24 +58,24 @@ public class Tile {
 		cbTileTypeChanged -= callback;
 	}
 
-	public bool PlaceObject( InstalledObject objInstance )
+	public bool PlaceFurniture( Furniture objInstance )
 	{
 		if( objInstance == null )
 		{
 			// We are uninstalling whatever was here before
-			installedObject = null;
+			furniture = null;
 			return true;
 		}
 
 		// objInstance isn't null
-		if( installedObject != null )
+		if( furniture != null )
 		{
-			Debug.LogError("Trying to assign an installed oject to a tile that already has one!");
+			Debug.LogError("Trying to assign furniture to a tile that already has one!");
 			return false;
 		}
 
 		// At this point, everything's fine!
-		installedObject = objInstance;
+		furniture = objInstance;
 		return true;
 	}
 }
