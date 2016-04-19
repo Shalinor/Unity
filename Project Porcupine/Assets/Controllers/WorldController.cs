@@ -7,9 +7,12 @@ public class WorldController : MonoBehaviour {
 
 	public static WorldController Instance { get; protected set; }
 
+	// FIXME
+	public Sprite wallSprite;
 	public Sprite floorSprite;
 
 	Dictionary<Tile, GameObject> tileGameObjectMap;
+	Dictionary<InstalledObject, GameObject> installedObjectGameObjectMap;
 
 	// The world and tile data
 	public World World { get; protected set; }
@@ -25,14 +28,20 @@ public class WorldController : MonoBehaviour {
 		// Create a world with Empty tiles
 		World = new World();
 
+		World.RegisterInstalledObjectCreated( OnInstalledObjectCreated );
+
 		// Instantiate our dictionary that tracks which GameObject is rendering which Tile data.
 		tileGameObjectMap = new Dictionary<Tile, GameObject>();
+
+		// Instantiate our dictionary that tracks which GameObject is rendering which InstalledObject data.
+		installedObjectGameObjectMap = new Dictionary<InstalledObject, GameObject>();
 
 		// Create a GameObject for each of our tiles, so they show visually.
 		for (int x = 0; x < World.Width; x++) {
 			for (int y = 0; y < World.Height; y++) {
 				Tile tile_data = World.GetTileAt(x,y);
 
+				// This creates a new GameObject and adds it to our scene.
 				GameObject tile_go = new GameObject();
 
 				// Add our tile/GO pair to the dictionary
@@ -129,6 +138,11 @@ public class WorldController : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Gets the tile at world-space coordinate.
+	/// </summary>
+	/// <returns>The tile at world coordinate.</returns>
+	/// <param name="coord">Unity World-Space coordinates.</param>
 	public Tile GetTileAtWorldCoord( Vector3 coord )
 	{
 		//		coord += new Vector3( 0.5f, 0.5f, 0 ); // Offsetting for center pivots vs bottom-left
@@ -136,5 +150,34 @@ public class WorldController : MonoBehaviour {
 		int y = Mathf.FloorToInt(coord.y);
 
 		return World.GetTileAt(x, y);
+	}
+
+	public void OnInstalledObjectCreated( InstalledObject obj )
+	{
+		//Debug.Log("OnInstalledObjectCreated");
+		// Create a visual GameObject linked to this data.
+
+		// FIXME: Does not consider multi-tile objects nor rotated objects
+
+		// This creates a new GameObject and adds it to our scene.
+		GameObject obj_go = new GameObject();
+
+		// Add our tile/GO pair to the dictionary
+		installedObjectGameObjectMap.Add( obj, obj_go );
+
+		obj_go.name = obj.ObjectType + "_" + obj.tile.X + "_" + obj.tile.Y;
+		obj_go.transform.position = new Vector3( obj.tile.X, obj.tile.Y, 0 );
+		obj_go.transform.SetParent(this.transform, true);
+
+		// FIXME: We assume that the object must be a single wall, so use the hardcoded reference to the wall sprite.
+		obj_go.AddComponent<SpriteRenderer>().sprite = wallSprite;	// FIXME
+
+		// Register our callback so our GameObject gets updated whenever the object's info changes
+		obj.RegisterOnChangedCallback( OnInstalledObjectChanged );
+	}
+
+	void OnInstalledObjectChanged( InstalledObject obj )
+	{
+		Debug.LogError("OnInstalledObjectChanged -- NOT IMPLEMENTED");
 	}
 }

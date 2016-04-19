@@ -70,7 +70,7 @@ public class Tile {
 		// objInstance isn't null
 		if( installedObject != null )
 		{
-			Debug.LogError("Trying to assign an installed boject to a tile that already has one!");
+			Debug.LogError("Trying to assign an installed oject to a tile that already has one!");
 			return false;
 		}
 
