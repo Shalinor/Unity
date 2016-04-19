@@ -152,7 +152,7 @@ public class MouseController : MonoBehaviour {
 						else
 						{
 							// We are in tile-changing mode
-							t.Type = buildModeTile;	
+							t.Type = buildModeTile;
 						}
 					}
 				}

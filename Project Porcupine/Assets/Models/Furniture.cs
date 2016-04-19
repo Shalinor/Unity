@@ -28,6 +28,8 @@ public class Furniture {
 
 	Action<Furniture> cbOnChanged;
 
+	Func<Tile, bool> funcPositionValidation;
+
 	// TODO: Implement larger objects
 	// TODO: Implement object rotation
 
@@ -47,11 +49,22 @@ public class Furniture {
 		furn.height = height;
 		furn.LinksToNeighbour = linksToNeighbour;
 
+		furn.funcPositionValidation = furn.IsValidPosition;
+
 		return furn;
 	}
 
 	static public Furniture PlaceInstance( Furniture proto, Tile tile )
 	{
+		// Check position validity
+		if( proto.funcPositionValidation( tile ) == false )
+		{
+			Debug.LogError("PlaceInstance -- Position Validity Function returned FALSE.");
+			return null;
+		}
+
+		// We now know our placement destination is valid.
+
 		Furniture furn = new Furniture();
 
 		furn.FurnitureType = proto.FurnitureType;
@@ -63,7 +76,7 @@ public class Furniture {
 		furn.tile = tile;
 
 		// FIXME: This (tile.PlaceObject()) assumes we are 1x1!
-		if( tile.PlaceFurniture( furn ) == false)
+		if( tile.PlaceFurniture( furn ) == false)	// This should never happen now we use funcPositionValidation above...
 		{
 			// For some reason, we weren't able to place our object in thie tile.
 			// (Probably it was already occupied.)
@@ -128,5 +141,33 @@ public class Furniture {
 	public void UnregisterOnChangedCallback( Action<Furniture> callbackFunc )
 	{
 		cbOnChanged -= callbackFunc;
+	}
+
+	public bool IsValidPosition( Tile t )
+	{
+		// Make sure tile is FLOOR
+		if( t.Type != TileType.FLOOR )
+		{
+			return false;
+		}
+
+		// Make sure tile doesn't already have furniture
+		if( t.furniture != null )
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	public bool IsValidPosition_Door( Tile t)
+	{
+		if( IsValidPosition( t ) == false )
+		{
+			return false;
+		}
+		// Make sure we have a pair of E/W walls or N/S walls
+
+		return true;
 	}
 }

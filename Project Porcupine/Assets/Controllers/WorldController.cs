@@ -9,6 +9,7 @@ public class WorldController : MonoBehaviour {
 
 	// FIXME
 	public Sprite floorSprite;
+	public Sprite emptySprite;
 
 	Dictionary<Tile, GameObject> tileGameObjectMap;
 	Dictionary<Furniture, GameObject> furnitureGameObjectMap;
@@ -54,9 +55,9 @@ public class WorldController : MonoBehaviour {
 				tile_go.transform.position = new Vector3( tile_data.X, tile_data.Y, 0 );
 				tile_go.transform.SetParent(this.transform, true);
 
-				// Add a sprite renderer, but don't bother setting a sprite
-				// because all the tiles are empty right now.
-				tile_go.AddComponent<SpriteRenderer>();
+				// Add a Sprite Renderer
+				// Add a default sprite for empty tiles.
+				tile_go.AddComponent<SpriteRenderer>().sprite = emptySprite;
 
 				// Register OnTileTypeChanged to tile_data's callback - using a Lambda ( () => {} )to insert
 				// the gameobject that OnTileTypeChanged requires and we know about, but the tile doesn't
@@ -70,10 +71,10 @@ public class WorldController : MonoBehaviour {
 			}
 		}
 
-		World.RandomizeTiles();
+		//World.RandomizeTiles();
 
 		// Center camera in the world
-		Camera.main.transform.position = new Vector3( World.Width / 2, World.Height / 2, -10 );
+		Camera.main.transform.position = new Vector3( World.Width / 2, World.Height / 2, Camera.main.transform.position.z );//-10 );
 	}
 
 
@@ -146,7 +147,7 @@ public class WorldController : MonoBehaviour {
 			tile_go.GetComponent<SpriteRenderer>().sprite = floorSprite;
 		}
 		else if( tile_data.Type == TileType.EMPTY ){
-			tile_go.GetComponent<SpriteRenderer>().sprite = null;
+			tile_go.GetComponent<SpriteRenderer>().sprite = emptySprite;//null;
 		}
 		else{
 			Debug.LogError("WorldController.cs_OnTileTypeChanged - Unrecognised tile type");
