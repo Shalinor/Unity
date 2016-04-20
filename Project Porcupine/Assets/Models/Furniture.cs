@@ -105,13 +105,13 @@ public class Furniture {
 				t.furniture.cbOnChanged(t.furniture);
 			}
 
-			t = tile.world.GetTileAt(x + 1, y + 1); // North-East
+/*			t = tile.world.GetTileAt(x + 1, y + 1); // North-East
 			if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 			{
 				// We have a Northern neighbour with the same object type as us, so
 				// tell it that it has changed by firing it's callback.
 				t.furniture.cbOnChanged(t.furniture);
-			}
+			}*/
 
 			t = tile.world.GetTileAt(x + 1, y); // East
 			if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
@@ -121,13 +121,13 @@ public class Furniture {
 				t.furniture.cbOnChanged(t.furniture);
 			}
 
-			t = tile.world.GetTileAt(x + 1, y - 1); // South-East
+/*			t = tile.world.GetTileAt(x + 1, y - 1); // South-East
 			if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 			{
 				// We have a Northern neighbour with the same object type as us, so
 				// tell it that it has changed by firing it's callback.
 				t.furniture.cbOnChanged(t.furniture);
-			}
+			}*/
 
 			t = tile.world.GetTileAt(x, y - 1); // South
 			if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
@@ -137,13 +137,13 @@ public class Furniture {
 				t.furniture.cbOnChanged(t.furniture);
 			}
 
-			t = tile.world.GetTileAt(x - 1, y - 1); // South-West
+/*			t = tile.world.GetTileAt(x - 1, y - 1); // South-West
 			if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 			{
 				// We have a Northern neighbour with the same object type as us, so
 				// tell it that it has changed by firing it's callback.
 				t.furniture.cbOnChanged(t.furniture);
-			}
+			}*/
 
 			t = tile.world.GetTileAt(x - 1, y); // West
 			if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
@@ -153,13 +153,13 @@ public class Furniture {
 				t.furniture.cbOnChanged(t.furniture);
 			}
 
-			t = tile.world.GetTileAt(x - 1, y + 1); // North-West
+/*			t = tile.world.GetTileAt(x - 1, y + 1); // North-West
 			if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 			{
 				// We have a Northern neighbour with the same object type as us, so
 				// tell it that it has changed by firing it's callback.
 				t.furniture.cbOnChanged(t.furniture);
-			}
+			}*/
 		}
 
 		return furn;

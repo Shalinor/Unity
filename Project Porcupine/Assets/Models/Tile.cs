@@ -13,10 +13,10 @@ public class Tile {
 				_type = value;
 
 				// Call the callback and let things know we've changed.
-				if(cbTileTypeChanged != null)
+				if(cbTileChanged != null)
 				{
 					//Debug.Log("changed");
-					cbTileTypeChanged(this);
+					cbTileChanged(this);
 				}
 			}
 		}
@@ -34,8 +34,8 @@ public class Tile {
 	public int X { get; protected set; }
 	public int Y { get; protected set; }
 
-	// The function we callback any time our type changes
-	Action<Tile> cbTileTypeChanged;
+	// The function we callback any time our tile's data changes
+	Action<Tile> cbTileChanged;
 
 	public Tile( World world, int x, int y ) {
 		this.world = world;
@@ -48,14 +48,14 @@ public class Tile {
 		//if(cbTileTypeChanged == null)
 		//	Debug.Log("pre - cbTileTypeChanged == null");
 		
-		cbTileTypeChanged += callback;
+		cbTileChanged += callback;
 
-		if(cbTileTypeChanged == null)
+		if(cbTileChanged == null)
 			Debug.Log("post - cbTileTypeChanged == null");
 	}
 
 	public void UnRegisterTileTypeChangedCallback(Action<Tile> callback) {
-		cbTileTypeChanged -= callback;
+		cbTileChanged -= callback;
 	}
 
 	public bool PlaceFurniture( Furniture objInstance )

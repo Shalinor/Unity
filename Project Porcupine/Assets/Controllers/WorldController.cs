@@ -20,7 +20,7 @@ public class WorldController : MonoBehaviour {
 	public World World { get; protected set; }
 
 	// Use this for initialization
-	void Start () {
+	void /*Start*/ OnEnable () {	// Ensure that this runs before any other classes Start()
 		if( Instance != null )
 		{
 			Debug.LogError("There should never be two world controllers.");
@@ -67,9 +67,12 @@ public class WorldController : MonoBehaviour {
 //				tile_data.RegisterTileTypeChangedCallback( myLambda/*(tile) => { OnTileTypeChanged( tile, tile_go ); }*/ );
 
 				// Register our callback so our GameObject gets updated whenever the tile's type changes
-				tile_data.RegisterTileTypeChangedCallback( OnTileTypeChanged );
+//				tile_data.RegisterTileTypeChangedCallback( OnTileTypeChanged );
 			}
 		}
+
+		// Register our callback so our GameObject gets updated whenever the tile's data changes
+		World.RegisterTileChanged( OnTileChanged );
 
 		//World.RandomizeTiles();
 
@@ -127,7 +130,7 @@ public class WorldController : MonoBehaviour {
 		// function to build all the GameObjects for the tiles on the new floor/level
 	}*/
 
-	void OnTileTypeChanged( Tile tile_data/*, GameObject tile_go*/ ){
+	void OnTileChanged( Tile tile_data/*, GameObject tile_go*/ ){
 
 		if( tileGameObjectMap.ContainsKey(tile_data) == false )
 		{
@@ -216,11 +219,11 @@ public class WorldController : MonoBehaviour {
 			spriteName += "N";
 		}
 
-		t = World.GetTileAt(x + 1, y + 1);
+/*		t = World.GetTileAt(x + 1, y + 1);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 		{
 			spriteName += "NE";
-		}
+		}*/
 
 		t = World.GetTileAt(x + 1, y);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
@@ -228,11 +231,11 @@ public class WorldController : MonoBehaviour {
 			spriteName += "E";
 		}
 
-		t = World.GetTileAt(x + 1, y - 1);
+/*		t = World.GetTileAt(x + 1, y - 1);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 		{
 			spriteName += "SE";
-		}
+		}*/
 
 		t = World.GetTileAt(x, y - 1);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
@@ -240,11 +243,11 @@ public class WorldController : MonoBehaviour {
 			spriteName += "S";
 		}
 
-		t = World.GetTileAt(x - 1, y - 1);
+/*		t = World.GetTileAt(x - 1, y - 1);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 		{
 			spriteName += "SW";
-		}
+		}*/
 
 		t = World.GetTileAt(x - 1, y);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
@@ -252,11 +255,11 @@ public class WorldController : MonoBehaviour {
 			spriteName += "W";
 		}
 
-		t = World.GetTileAt(x - 1, y + 1);
+/*		t = World.GetTileAt(x - 1, y + 1);
 		if( t != null && t.furniture != null && t.furniture.FurnitureType == furn.FurnitureType )
 		{
 			spriteName += "NW";
-		}
+		}*/
 
 		// For example, if this object has all four neighbours of
 		// the same tupe, then the string will look like:
