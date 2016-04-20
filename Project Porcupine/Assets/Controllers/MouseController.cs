@@ -147,7 +147,17 @@ public class MouseController : MonoBehaviour {
 						if( buildModeIsObjects == true )
 						{
 							// Create the Furniture and assign it to the tile
-							WorldController.Instance.World.PlaceFurniture( buildModeObjectType, t );
+
+							// FIXME: This instantly builds the furniture:
+							//WorldController.Instance.World.PlaceFurniture( buildModeObjectType, t );
+
+							string furnitureType = buildModeObjectType;
+							Job j = new Job( t,
+											(theJob) => { WorldController.Instance.World.PlaceFurniture( furnitureType, theJob.tile ); },
+											1f );
+
+							WorldController.Instance.World.jobQueue.Enqueue( j );
+							Debug.Log("Job Queue Size: " + WorldController.Instance.World.jobQueue.Count);
 						}
 						else
 						{
