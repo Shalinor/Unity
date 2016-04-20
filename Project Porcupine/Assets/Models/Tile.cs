@@ -29,6 +29,8 @@ public class Tile {
 	// Furniture is something like a wall, door or sofa.
 	public Furniture furniture { get; protected set; }
 
+	public Job pendingFurnitureJob;
+
 	// The context in which we exist - in case we need to know it...
 	public World world { get; protected set; }
 	public int X { get; protected set; }

@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Controllers\MouseController.cs" />
      <Compile Include="Assets\Controllers\SoundController.cs" />
+     <Compile Include="Assets\Controllers\SpriteController.cs" />
      <Compile Include="Assets\Controllers\WorldController.cs" />
      <Compile Include="Assets\Models\Furniture.cs" />
      <Compile Include="Assets\Models\Inventory.cs" />

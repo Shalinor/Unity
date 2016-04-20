@@ -121,7 +121,7 @@ public class MouseController : MonoBehaviour {
 			// Loop through all the selected tiles
 			for (int x = start_x; x <= end_x; x++) {
 				for (int y = start_y; y <= end_y; y++) {
-					Tile t = WorldController.Instance.World.GetTileAt( x, y );
+					Tile t = WorldController.Instance.world.GetTileAt( x, y );
 					if( t != null )
 					{
 						// Display the building hint on top of this tile position
@@ -140,7 +140,7 @@ public class MouseController : MonoBehaviour {
 			// Loop through all the selected tiles
 			for (int x = start_x; x <= end_x; x++) {
 				for (int y = start_y; y <= end_y; y++) {
-					Tile t = WorldController.Instance.World.GetTileAt( x, y );
+					Tile t = WorldController.Instance.world.GetTileAt( x, y );
 
 					if( t != null )
 					{
@@ -151,13 +151,29 @@ public class MouseController : MonoBehaviour {
 							// FIXME: This instantly builds the furniture:
 							//WorldController.Instance.World.PlaceFurniture( buildModeObjectType, t );
 
-							string furnitureType = buildModeObjectType;
-							Job j = new Job( t,
-											(theJob) => { WorldController.Instance.World.PlaceFurniture( furnitureType, theJob.tile ); },
-											1f );
+							// Can we build the furniture in the selected tile?
+							// Run the ValidPlacement function
 
-							WorldController.Instance.World.jobQueue.Enqueue( j );
-							Debug.Log("Job Queue Size: " + WorldController.Instance.World.jobQueue.Count);
+							string furnitureType = buildModeObjectType;
+
+							if( WorldController.Instance.world.IsFurniturePlacementValid( furnitureType, t ) &&
+								t.pendingFurnitureJob == null )
+							{
+								// This tile position is valid for this furniture
+								// Create a job for it to be built
+								Job j = new Job( t,
+												(theJob) => { WorldController.Instance.world.PlaceFurniture( furnitureType, theJob.tile ); t.pendingFurnitureJob = null; },
+												1f );
+
+								// FIXME: I don't like having to manually and explicitly set
+								// flags that prevent conflicts. It's too easy to forget to set/clear them!
+								t.pendingFurnitureJob = j;
+								j.RegisterJobCancelCallback( (theJob) => { theJob.tile.pendingFurnitureJob = null; } );
+
+								// Add the job to the queue
+								WorldController.Instance.world.jobQueue.Enqueue( j );
+								Debug.Log("Job Queue Size: " + WorldController.Instance.world.jobQueue.Count);
+							}
 						}
 						else
 						{

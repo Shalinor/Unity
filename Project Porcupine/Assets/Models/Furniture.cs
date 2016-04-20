@@ -49,7 +49,7 @@ public class Furniture {
 		furn.height = height;
 		furn.LinksToNeighbour = linksToNeighbour;
 
-		furn.funcPositionValidation = furn.IsValidPosition;
+		furn.funcPositionValidation = furn.__IsValidPosition;
 
 		return furn;
 	}
@@ -177,6 +177,13 @@ public class Furniture {
 
 	public bool IsValidPosition( Tile t )
 	{
+		return funcPositionValidation( t );
+	}
+
+	// FIXME: These functions should never be called directly,
+	// so they probably shouldn't be public functions of Furniture
+	public bool __IsValidPosition( Tile t )
+	{
 		// Make sure tile is FLOOR
 		if( t.Type != TileType.FLOOR )
 		{
@@ -192,9 +199,9 @@ public class Furniture {
 		return true;
 	}
 
-	public bool IsValidPosition_Door( Tile t)
+	public bool __IsValidPosition_Door( Tile t)
 	{
-		if( IsValidPosition( t ) == false )
+		if( __IsValidPosition( t ) == false )
 		{
 			return false;
 		}

@@ -158,4 +158,9 @@ public class World {
 
 		cbTileChanged(t);
 	}
+
+	public bool IsFurniturePlacementValid( string furnitureType, Tile t )
+	{
+		return furniturePrototypes[furnitureType].IsValidPosition( t );
+	}
 }

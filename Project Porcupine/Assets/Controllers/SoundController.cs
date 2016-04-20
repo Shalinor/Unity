@@ -7,9 +7,9 @@ public class SoundController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		WorldController.Instance.World.RegisterFurnitureCreated( OnFurnitureCreated );	// Register this classes chosen function as a callback within the World's RegisterFurnitureCreated()
+		WorldController.Instance.world.RegisterFurnitureCreated( OnFurnitureCreated );	// Register this classes chosen function as a callback within the World's RegisterFurnitureCreated()
 
-		WorldController.Instance.World.RegisterTileChanged( OnTileChanged );
+		WorldController.Instance.world.RegisterTileChanged( OnTileChanged );
 	}
 	
 	// Update is called once per frame
