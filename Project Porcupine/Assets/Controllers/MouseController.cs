@@ -6,10 +6,6 @@ public class MouseController : MonoBehaviour {
 
 	public GameObject circleCursorPrefab;
 
-	bool	 buildModeIsObjects = false;
-	TileType buildModeTile = TileType.FLOOR;
-	string	 buildModeObjectType;
-
 	// The world-position of the mouse this frame
 	Vector3 currFramePosition;
 
@@ -54,22 +50,6 @@ public class MouseController : MonoBehaviour {
 		lastFramePosition.z = 0;
 		lastFramePosition = CenterPointOffset( lastFramePosition );
 	}
-
-/*	void UpdateCursor()
-	{
-		// Update the circle cursor position
-		Tile tileUnderMouse = WorldController.Instance.GetTileAtWorldCoord( currFramePosition );
-		if( tileUnderMouse != null )
-		{
-			circleCursor.SetActive( true );
-			Vector3 cursorPosition = new Vector3( tileUnderMouse.X, tileUnderMouse.Y, 0 );
-			circleCursor.transform.position = cursorPosition;
-		}
-		else
-		{
-			circleCursor.SetActive( false );
-		}
-	}*/
 
 	void UpdateDragging()
 	{
@@ -137,6 +117,8 @@ public class MouseController : MonoBehaviour {
 		// End drag
 		if( Input.GetMouseButtonUp(0) )		// If left mouse button was released in the last frame
 		{
+			BuildModeController bmc = GameObject.FindObjectOfType<BuildModeController>();
+
 			// Loop through all the selected tiles
 			for (int x = start_x; x <= end_x; x++) {
 				for (int y = start_y; y <= end_y; y++) {
@@ -144,42 +126,8 @@ public class MouseController : MonoBehaviour {
 
 					if( t != null )
 					{
-						if( buildModeIsObjects == true )
-						{
-							// Create the Furniture and assign it to the tile
-
-							// FIXME: This instantly builds the furniture:
-							//WorldController.Instance.World.PlaceFurniture( buildModeObjectType, t );
-
-							// Can we build the furniture in the selected tile?
-							// Run the ValidPlacement function
-
-							string furnitureType = buildModeObjectType;
-
-							if( WorldController.Instance.world.IsFurniturePlacementValid( furnitureType, t ) &&
-								t.pendingFurnitureJob == null )
-							{
-								// This tile position is valid for this furniture
-								// Create a job for it to be built
-								Job j = new Job( t,
-												(theJob) => { WorldController.Instance.world.PlaceFurniture( furnitureType, theJob.tile ); t.pendingFurnitureJob = null; },
-												1f );
-
-								// FIXME: I don't like having to manually and explicitly set
-								// flags that prevent conflicts. It's too easy to forget to set/clear them!
-								t.pendingFurnitureJob = j;
-								j.RegisterJobCancelCallback( (theJob) => { theJob.tile.pendingFurnitureJob = null; } );
-
-								// Add the job to the queue
-								WorldController.Instance.world.jobQueue.Enqueue( j );
-								Debug.Log("Job Queue Size: " + WorldController.Instance.world.jobQueue.Count);
-							}
-						}
-						else
-						{
-							// We are in tile-changing mode
-							t.Type = buildModeTile;
-						}
+						// Call BuildModeController::DoBuild( t );
+						bmc.DoBuild( t );
 					}
 				}
 			}
@@ -207,27 +155,10 @@ public class MouseController : MonoBehaviour {
 		}
 	}
 
+
 	Vector3 CenterPointOffset( Vector3 vector )
 	{
 		return vector += new Vector3( 0.5f, 0.5f, 0 );
 	}
 
-	public void SetMode_BuildFloor()
-	{
-		buildModeIsObjects = false;
-		buildModeTile = TileType.FLOOR;
-	}
-
-	public void SetMode_Bulldoze()
-	{
-		buildModeIsObjects = false;
-		buildModeTile = TileType.EMPTY;
-	}
-
-	public void SetMode_BuildFurniture( string objectType )
-	{
-		// Wall is not a Tile! Wall is an "Furniture" that exists on TOP of a tile.
-		buildModeIsObjects = true;
-		buildModeObjectType = objectType;
-	}
 }
