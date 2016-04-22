@@ -55,6 +55,7 @@
      <Compile Include="Assets\Models\Furniture.cs" />
      <Compile Include="Assets\Models\Inventory.cs" />
      <Compile Include="Assets\Models\Job.cs" />
+     <Compile Include="Assets\Models\JobQueue.cs" />
      <Compile Include="Assets\Models\Tile.cs" />
      <Compile Include="Assets\Models\World.cs" />
      <Compile Include="Assets\UI\AutomaticVerticalSize.cs" />

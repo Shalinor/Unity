@@ -70,7 +70,7 @@ public class BuildModeController : MonoBehaviour {
 
 				// Add the job to the queue
 				WorldController.Instance.world.jobQueue.Enqueue( j );
-				Debug.Log("Job Queue Size: " + WorldController.Instance.world.jobQueue.Count);
+
 			}
 		}
 		else

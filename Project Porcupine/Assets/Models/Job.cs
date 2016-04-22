@@ -11,6 +11,9 @@ public class Job {
 	public Tile tile { get; protected set; }
 	float jobTime;	// Time required to complete job
 
+	// FIXME: Hard-coding a parameter for furniture. Do not like.
+	public Furniture theFurniture;
+
 	Action<Job> cbJobComplete;
 	Action<Job> cbJobCancel;
 
