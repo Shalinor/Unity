@@ -80,4 +80,27 @@ public class Tile {
 		furniture = objInstance;
 		return true;
 	}
+
+	// Tells us if two tiles are adjacent.
+	public bool IsNeighbour( Tile tile, bool diagOkay = false )
+	{
+		// Same column, row above or below
+		if( this.X == tile.X && ( this.Y == tile.Y + 1 || this.Y == tile.Y - 1))
+			return true;
+
+		// Same row, column above or below
+		if( this.Y == tile.Y && ( this.X == tile.X + 1 || this.Y == tile.X - 1))
+			return true;
+
+		if( diagOkay )
+		{
+			if( this.X == tile.X+1 && ( this.Y == tile.Y + 1 || this.Y == tile.Y - 1))
+				return true;
+			if( this.X == tile.X-1 && ( this.Y == tile.Y + 1 || this.Y == tile.Y - 1))
+				return true;
+			
+		}
+
+		return false;
+	}
 }

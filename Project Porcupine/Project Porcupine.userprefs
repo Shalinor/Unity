@@ -4,11 +4,15 @@
     <Files>
       <File FileName="Assets\Controllers\MouseController.cs" Line="1" Column="1" />
       <File FileName="Assets\Controllers\BuildModeController.cs" Line="67" Column="1" />
-      <File FileName="Assets\Controllers\FurnitureSpriteController.cs" Line="168" Column="1" />
-      <File FileName="Assets\Controllers\JobSpriteController.cs" Line="41" Column="49" />
+      <File FileName="Assets\Controllers\FurnitureSpriteController.cs" Line="58" Column="37" />
+      <File FileName="Assets\Controllers\JobSpriteController.cs" Line="42" Column="31" />
       <File FileName="Assets\Models\JobQueue.cs" Line="1" Column="1" />
-      <File FileName="Assets\Models\World.cs" Line="167" Column="60" />
-      <File FileName="Assets\Models\Job.cs" Line="45" Column="16" />
+      <File FileName="Assets\Models\World.cs" Line="54" Column="29" />
+      <File FileName="Assets\Models\Job.cs" Line="1" Column="1" />
+      <File FileName="Assets\Models\Tile.cs" Line="101" Column="1" />
+      <File FileName="Assets\Models\Character.cs" Line="27" Column="53" />
+      <File FileName="Assets\Controllers\CharacterSpriteController.cs" Line="60" Column="37" />
+      <File FileName="Assets\Controllers\TileSpriteController.cs" Line="41" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
