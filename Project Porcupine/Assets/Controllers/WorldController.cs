@@ -25,6 +25,12 @@ public class WorldController : MonoBehaviour {
 		Camera.main.transform.position = new Vector3( world.Width / 2, world.Height / 2, Camera.main.transform.position.z );//-10 );
 	}
 
+	void Update()
+	{
+		// TODO: Add pause/unpause, speed controls, etc...
+		world.Update(Time.deltaTime);
+	}
+
 	/// <summary>
 	/// Gets the tile at world-space coordinate.
 	/// </summary>

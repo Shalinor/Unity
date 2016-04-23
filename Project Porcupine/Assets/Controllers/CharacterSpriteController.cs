@@ -22,8 +22,8 @@ public class CharacterSpriteController : MonoBehaviour {
 
 
 		// DEBUG
-		world.CreateCharacter( world.GetTileAt( world.Width/2, world.Height/2 ) );
-
+		Character c = world.CreateCharacter( world.GetTileAt( world.Width/2, world.Height/2 ) );
+		//c.SetDestination( world.GetTileAt( world.Width/2 + 5, world.Height/2 ) );
 	}
 
 	void LoadSprites()
@@ -51,7 +51,7 @@ public class CharacterSpriteController : MonoBehaviour {
 		characterGameObjectMap.Add( character, char_go );
 
 		char_go.name = "Character";
-		char_go.transform.position = new Vector3( character.currTile.X, character.currTile.Y, 0 );
+		char_go.transform.position = new Vector3( character.X, character.Y, 0 );
 		char_go.transform.SetParent(this.transform, true);
 
 		// FIXME: We assume that the object must be a single wall, so use the hardcoded reference to the wall sprite.
@@ -60,23 +60,24 @@ public class CharacterSpriteController : MonoBehaviour {
 		sr.sortingLayerName = "Character";
 
 		// Register our callback so our GameObject gets updated whenever the object's info changes
-		//character.RegisterOnChangedCallback( OnFurnitureChanged );
+		character.RegisterOnChangedCallback( OnCharacterChanged );
 	}
 
-/*	void OnFurnitureChanged( Furniture furn )
+	void OnCharacterChanged( Character character )
 	{
 		// Make sure the furniture's graphics are correct. e.g. damaged furniture, walls adjusting for newly adjacent walls, etc
 
-		if( characterGameObjectMap.ContainsKey(furn) == false )
+		if( characterGameObjectMap.ContainsKey(character) == false )
 		{
-			Debug.LogError("OnFurnitureChanged -- trying to change visuals for furniture not in our map.");
+			Debug.LogError("OnCharacterChanged -- trying to change visuals for a character not in our map.");
 			return;
 		}
 
-		GameObject furn_go = characterGameObjectMap[furn];
-		furn_go.GetComponent<SpriteRenderer>().sprite = GetSpriteForFurniture(furn);
+		GameObject char_go = characterGameObjectMap[character];
+
+		char_go.transform.position = new Vector3( character.X, character.Y, 0 );
 	}
-*/
+
 	public Sprite GetSpriteForFurniture( string objectType )
 	{
 		if(characterSprites.ContainsKey(objectType))
