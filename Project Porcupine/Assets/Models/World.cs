@@ -159,4 +159,15 @@ public class World {
 	{
 		return furniturePrototypes[furnitureType].IsValidPosition( t );
 	}
+
+	public Furniture GetFurniturePrototype( string objectType )
+	{
+		if( furniturePrototypes.ContainsKey(objectType) == false )
+		{
+			Debug.LogError("No furniture with type: " + objectType);
+			return null;
+		}
+		
+		return furniturePrototypes[objectType];
+	}
 }

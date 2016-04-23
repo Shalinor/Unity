@@ -60,6 +60,7 @@ public class BuildModeController : MonoBehaviour {
 				// This tile position is valid for this furniture
 				// Create a job for it to be built
 				Job j = new Job( t,
+					furnitureType,
 					(theJob) => { WorldController.Instance.world.PlaceFurniture( furnitureType, theJob.tile ); t.pendingFurnitureJob = null; },
 					1f );
 

@@ -12,14 +12,15 @@ public class Job {
 	float jobTime;	// Time required to complete job
 
 	// FIXME: Hard-coding a parameter for furniture. Do not like.
-	public Furniture theFurniture;
+	public string jobObjectType { get; protected set; }
 
 	Action<Job> cbJobComplete;
 	Action<Job> cbJobCancel;
 
-	public Job ( Tile tile, Action<Job> cbJobComplete, float jobTime = 1f )
+	public Job ( Tile tile, string jobObjectType, Action<Job> cbJobComplete, float jobTime = 1f )
 	{
 		this.tile = tile;
+		this.jobObjectType = jobObjectType;
 		this.cbJobComplete += cbJobComplete;
 		this.jobTime = jobTime;
 	}
@@ -33,6 +34,17 @@ public class Job {
 	{
 		cbJobCancel += callback;
 	}
+
+	public void UnregisterJobCompleteCallback( Action<Job> callback )
+	{
+		cbJobComplete -= callback;
+	}
+
+	public void UnregisterJobCancelCallback( Action<Job> callback )
+	{
+		cbJobCancel -= callback;
+	}
+
 
 	public void DoWork( float workTime )
 	{
