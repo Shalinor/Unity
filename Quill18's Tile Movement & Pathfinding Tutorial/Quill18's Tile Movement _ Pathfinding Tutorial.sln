@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quill18's Tile Movement _ Pathfinding Tutorial.CSharp", "Quill18's Tile Movement _ Pathfinding Tutorial.CSharp.csproj", "{B4AF8D1F-4A17-839E-C70C-5179817D7C15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4AF8D1F-4A17-839E-C70C-5179817D7C15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4AF8D1F-4A17-839E-C70C-5179817D7C15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4AF8D1F-4A17-839E-C70C-5179817D7C15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4AF8D1F-4A17-839E-C70C-5179817D7C15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
